@@ -1,7 +1,4 @@
-//Written by: Roee Shemesh
-//I.D: 209035179
 package test;
-
 import java.util.ArrayList;
 
 public class Board {
@@ -14,22 +11,25 @@ public class Board {
                 gameBoard[i][j] = null;
     }
 
+    //Singlton - Board.
     private static Board myBoard = null;
-
     public static Board getBoard() {
         if (myBoard == null)
             myBoard = new Board();
         return myBoard;
     }
 
+    //Returns the tiles on the board.
     public Tile[][] getTiles() {
         return gameBoard.clone();
     }
 
+    //Checks the legality of the row and column (in the range or not).
     public boolean legalRowCol(Word word) {
         return word.getRow() >= 0 && word.getRow() <= 14 && word.getCol() >= 0 && word.getCol() <= 14;
     }
 
+    //Checks if the location of the word is inside the board.
     public boolean isInBoard(Word word) {
         if (!legalRowCol(word))
             return false;
@@ -38,6 +38,7 @@ public class Board {
         } else return (word.getCol() + word.getTiles().length) <= 15;
     }
 
+    //Checks if the word uses a tile or around the word there is a tile that was already on the board.
     public boolean isBasedOnTile(Word word) {
         if (word.getVertical()) {
             for (int i = 0; i < word.getTiles().length; i++)
@@ -78,6 +79,7 @@ public class Board {
         return false;
     }
 
+    //Checks if the new word replaces a tile that was already on the board with another tile.
     public boolean noChangeTile(Word word) {
         if (word.getVertical()) {
             for (int i = 0; i < word.getTiles().length; i++) {
@@ -95,6 +97,7 @@ public class Board {
         return true;
     }
 
+    //True - board is empty
     public boolean isEmptyBoard() {
         for (int i = 0; i < gameBoard.length; i++)
             for (int j = 0; j < gameBoard[i].length; j++)
@@ -103,6 +106,7 @@ public class Board {
         return true;
     }
 
+    //Checks if the word should receive a star bonus.
     public boolean isBasedOnStar(Word word) {
         if (word.getVertical()) {
             for (int i = 0; i < word.getTiles().length; i++)
@@ -116,6 +120,7 @@ public class Board {
         return false;
     }
 
+    //Checks the board legality of inserting the word into the board.
     public boolean boardLegal(Word word) {
         if (isEmptyBoard()) {
             if (!isInBoard(word))
@@ -130,11 +135,14 @@ public class Board {
         }
     }
 
+    //Checks the dictionary legality of the word.
     public boolean dictionaryLegal(Word word) {
         return true;
     }
 
-    public int typeOfWord(Word word) {//1-verticalLeft,2-verticalRight,3-verticalMiddle,4-horizontalUp,5-horizontalDown,6-horizontalMiddle
+    //Checks the direction type of the word.
+    //1-verticalLeft,2-verticalRight,3-verticalMiddle,4-horizontalUp,5-horizontalDown,6-horizontalMiddle.
+    public int typeOfWord(Word word) {
         if (word.getVertical()) {
             if (word.getCol() == 0)
                 return 1;
@@ -150,6 +158,7 @@ public class Board {
         }
     }
 
+    //Returns a word that created by placing other word on the board.
     public Word createWord(int line, int firstIndex, int lastIndex, boolean vertical,Word initialWord) {
         Tile[]newWordTiles=new Tile[lastIndex-firstIndex+1];
         Word newWord;
@@ -167,6 +176,8 @@ public class Board {
         return newWord;
     }
 
+    //Given a word, returns an array of the new words that will be created on the board including that word.
+    //1-verticalLeft,2-verticalRight,3-verticalMiddle,4-horizontalUp,5-horizontalDown,6-horizontalMiddle.
     public ArrayList<Word> getWords(Word word) {
         int counter = 0;
         ArrayList<Word> wordsArray = new ArrayList<Word>();
@@ -265,7 +276,9 @@ public class Board {
         return wordsArray;
     }
 
-    public int getColor(int R, int C) {//0-Green,1-Red,2-Yellow,3-PaleBlue,4-Blue,5-Star
+    //Given location, Returns the color of the tile.
+    //0-Green,1-Red,2-Yellow,3-PaleBlue,4-Blue,5-Star.
+    public int getColor(int R, int C) {
         if ((R == 0 && C == 0) || (R == 0 && C == 7) || (R == 0 && C == 14) || (R == 7 && C == 0) || (R == 7 && C == 14) || (R == 14 && C == 0) || (R == 14 && C == 7) || (R == 14 && C == 14))
             return 1;
         else if ((R == 1 && C == 1) || (R == 1 && C == 13) || (R == 2 && C == 2) || (R == 2 && C == 12) || (R == 3 && C == 3) || (R == 3 && C == 11) || (R == 4 && C == 4) || (R == 4 && C == 10) || (R == 10 && C == 4) || (R == 10 && C == 10) || (R == 11 && C == 3) || (R == 11 && C == 11) || (R == 12 && C == 2) || (R == 12 && C == 12) || (R == 13 && C == 1) || (R == 13 && C == 13))
@@ -279,6 +292,7 @@ public class Board {
         return 0;
     }
 
+    //Given a word, calculates the total score of the word, including bonuses.
     public int getScore(Word word,boolean isFirstWord) {
         int score = 0;
         int multiWord = 1;
@@ -391,6 +405,8 @@ public class Board {
         return score;
     }
 
+    //Given a word, checks board legality, than checks dictionary legality for the word and the created words.
+    //Returns the total score for all words or 0.
     public int tryPlaceWord(Word word) {
         int totalScore = 0;
         boolean emptyFlag=false;
