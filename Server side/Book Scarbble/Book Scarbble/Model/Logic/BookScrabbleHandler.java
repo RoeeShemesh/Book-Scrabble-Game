@@ -1,10 +1,9 @@
-//written by: Roee Shemesh - 209035179
 package test;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
+
 public class BookScrabbleHandler implements ClientHandler {
     PrintWriter out;
     Scanner in;
