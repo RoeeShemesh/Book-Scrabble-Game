@@ -1,12 +1,12 @@
-//written by: Roee Shemesh - 209035179
 package test;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
 public class IOSearcher {
 
+    //Given word and files, search the word inside the files.
     public static Boolean search(String word,String...files) throws IOException {
         for(String fileName : files){
             File f1=new File(fileName);
@@ -21,6 +21,7 @@ public class IOSearcher {
                 {
                     if (w.equals(word))
                     {
+                        fr.close(); //new
                         return true;
                     }
                 }
