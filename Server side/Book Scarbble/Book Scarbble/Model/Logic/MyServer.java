@@ -1,10 +1,9 @@
-//written by: Roee Shemesh - 209035179
 package test;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+
 public class MyServer {
     private int port;
     private ClientHandler ch;
