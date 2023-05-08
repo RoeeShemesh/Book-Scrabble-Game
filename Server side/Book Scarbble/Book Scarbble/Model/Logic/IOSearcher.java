@@ -7,6 +7,7 @@ import java.io.IOException;
 public class IOSearcher {
 
     //Given word and files, search the word inside the files.
+    //If the word found, returns true, else return false.
     public static Boolean search(String word,String...files) throws IOException {
         for(String fileName : files){
             File f1=new File(fileName);
