@@ -1,4 +1,3 @@
-//written by: Roee Shemesh - 209035179
 package test;
 
 public interface CacheReplacementPolicy{

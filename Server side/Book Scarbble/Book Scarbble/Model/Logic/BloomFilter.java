@@ -1,6 +1,4 @@
-//written by: Roee Shemesh - 209035179
 package test;
-
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.BitSet;
@@ -18,6 +16,7 @@ public class BloomFilter {
         bitArray.set(0, numBits, false);
     }
 
+    //Given a word, insert it to the bloom filter.
     public void add(String word) {
         for (String alg : algs) {
             try {
@@ -33,6 +32,7 @@ public class BloomFilter {
         }
     }
 
+    //True - the given word is in the bloom filter.
     public boolean contains(String word) {
         for (String alg : algs) {
             try {

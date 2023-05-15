@@ -1,10 +1,11 @@
-//written by: Roee Shemesh - 209035179
 package test;
-
 import java.util.LinkedHashMap;
 
+//Least Frequently Used
 public class LFU implements CacheReplacementPolicy{
     LinkedHashMap<String,Integer> wordsInCache=new LinkedHashMap<String,Integer>();
+    
+    //Given word, add it to the cache (with value 1), if the word is already exist inside the cache, remove it and than add it to the cache (with previous value + 1).
     public void add(String word){
         int newValue=1;
         if(wordsInCache.containsKey(word)) {
@@ -13,6 +14,8 @@ public class LFU implements CacheReplacementPolicy{
         }
         wordsInCache.put(word,newValue);
     }
+    
+    //Returns the key with the minimum value(the word we should remove).
     public String remove() {
         String key=wordsInCache.keySet().iterator().next();
         int min = wordsInCache.get(key);

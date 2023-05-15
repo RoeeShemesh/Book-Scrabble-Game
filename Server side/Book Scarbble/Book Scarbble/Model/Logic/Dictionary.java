@@ -1,13 +1,14 @@
-//written by: Roee Shemesh - 209035179
 package test;
-
 import java.io.IOException;
 import java.io.*;
 
 
 public class Dictionary {
+    //Cache for the words that exist.
     private final CacheManager existWords;
+    //Cache for the words that don't exist.
     private final CacheManager notExistWords;
+    //The bloom filter cache.
     private final BloomFilter bloomFilter;
     private String[] filesNames;
 
@@ -33,6 +34,8 @@ public class Dictionary {
         }
     }
 
+    //Given word, search it inside existing words cache, than inside not existing words cache, than inside bloom filter cache, if not found, returns false.
+    //If the word found inside the bloom filter cache, updates the other caches.
     public Boolean query(String word) {
         if (existWords.wordsInCache.contains(word))
             return true;
@@ -46,6 +49,8 @@ public class Dictionary {
         return false;
     }
 
+    //Given word, search it inside the files, if not found or exception, return false.
+    //If the word is found, updates the cache and returns true.
     public Boolean challenge(String word) {
         try {
             if (IOSearcher.search(word,filesNames)) {
